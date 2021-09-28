@@ -46,13 +46,14 @@ class AutoloaderPSR4
     }
 
     /**
-     * 
+     * Registre Class
      */
     function registrer($class)
     {
         $parts = explode('\\', $class);
         $classname = array_pop($parts);
         array_shift($parts);
+
         foreach (self::$config as $namespace => $folder) {
             $this->getAutoloadComposer($folder);
             if (!file_exists($folder)) {
@@ -74,17 +75,6 @@ class AutoloaderPSR4
     }
 
     /**
-     * 
-     */
-    function browsing(string $folder, $callable)
-    {
-        foreach (glob($folder . '/*') as $file)
-            if (is_dir($file))
-                $this->browsing($file, $callable);
-            else $callable($file);
-    }
-
-    /**
      *
      */
     function save()
@@ -92,7 +82,6 @@ class AutoloaderPSR4
         $str = "<?php return [\n";
         foreach ($this->classList as $key => $filename) {
             $key = str_replace('\\', '\\\\', $key);
-            $str .= "\t\"" . $key . '"=>"' . $filename . '",' . "\n";
         }
         $str .= "];\n";
         file_put_contents(self::cache, $str);
