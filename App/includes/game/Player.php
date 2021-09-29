@@ -2,16 +2,33 @@
 
 namespace App\game;
 
+/**
+ * Describe a single player. 
+ */
 class Player
 {
 
     /**
-     * 
+     * @var string $name (read-only) 
+     */
+    private string $name;
+
+    /**
+     * @var string $name
      */
     function __construct(
-        public $name = 'Guest'
+        $name = 'Guest'
     ) {
         $this->name = $name;
+    }
+
+    /**
+     * Display name as read-only.
+     */
+    function __get(string $propertie)
+    {
+        if ('name' === $propertie)
+            return $this->name;
     }
 
     /**

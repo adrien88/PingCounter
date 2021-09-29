@@ -11,8 +11,11 @@ class Scoring
      * @param array $players List of players
      *      > like : [ "foo", "bar", "joe",.. ]
      */
-    function __construct(array $players)
-    {
+    function __construct(
+        private array $players,
+        private int $goal = 11,
+        private int $diff = 2,
+    ) {
         foreach ($players as $player)
             $this->scoring[$player->name] = 0;
     }
@@ -39,6 +42,15 @@ class Scoring
             }
         }
         return true;
+    }
+
+    function __toString()
+    {
+        sort($this->scoring);
+        $str = '<ul>';
+        foreach ($this->scoring as $player => $count)
+            $str .= "<li>$player => $count</li>";
+        return $str . '</ul>';
     }
 
     /**
