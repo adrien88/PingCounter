@@ -2,26 +2,23 @@
 
 use App\game\Matches;
 use App\game\Player;
-use Frame\AutoloaderPSR4;
+
 
 ini_set('display_errors', '1');
 session_start();
 
-include_once 'Frame/AutoloaderPSR4.php';
-new AutoloaderPSR4;
-// new Router;
+include_once 'vendor/autoload.php';
 
 // $_SESSION['matches'] = [];
 
-$adrien = new Player('Adrien');
-$jojo = new Player('Jojo');
-$match = new Matches([$adrien, $jojo]);
+$players = [new Player('Adrien'), new Player('Saïd')];
+$match = new Matches($players);
 while (!$match->isClosed()) {
     $set = $match->newSet();
     if (null != $set) {
         $score = $set->playSet();
     }
 }
-echo 'Vaiqueur : ';
+echo 'Vainqueur : ';
 
 var_dump($match);
