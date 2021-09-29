@@ -5,18 +5,20 @@ namespace App\game;
 class Player
 {
 
-    private static $list = [];
-
-    static function getInstance(string $name)
-    {
-        return self::$list[$name];
-    }
-
+    /**
+     * 
+     */
     function __construct(
         public $name = 'Guest'
     ) {
-        if (!array_key_exists($this->name, self::$list)) {
-            self::$list[$this->name] = $this;
-        }
+        $this->name = $name;
+    }
+
+    /**
+     * 
+     */
+    function play(): bool
+    {
+        return (1 == rand(0, 1)) ? true : false;
     }
 }

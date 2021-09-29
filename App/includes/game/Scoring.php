@@ -25,20 +25,35 @@ class Scoring
         if (isset($this->scoring[$player])) {
             $this->scoring[$player]++;
         }
-        return $this->testEnding();
+    }
+
+    /**
+     * Test if 
+     */
+    function isEnding(): bool
+    {
+        if (11 <= max($this->scoring)) {
+            sort($this->scoring);
+            if (2 > ($this->scoring[0] - $this->scoring[1])) {
+                return false;
+            }
+        }
+        return true;
     }
 
     /**
      * 
      */
-    function testEnding()
+    function getScore()
     {
-        $max = max($this->scoring);
-        if (11 <= $max) {
-            sort($this->scoring);
-            if (2 > ($this->scoring[0] - $this->scoring[1])) {
-                array_keys($this->scoring[0]);
-            }
-        }
+        return $this->scoring;
+    }
+
+    /**
+     * 
+     */
+    function getLeader()
+    {
+        return array_shift(array_keys($this->scoring[0]));
     }
 }
