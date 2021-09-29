@@ -1,0 +1,11 @@
+{
+    "name": "adrien/ping-counter",
+    "description": "exercice de formation",
+    "authors": [
+        {
+            "name": "adrien88",
+            "email": "adrien.boilley@gmail.com"
+        }
+    ],
+    "require": {}
+}
