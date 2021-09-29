@@ -8,4 +8,12 @@ class Matches
     {
         var_dump('default');
     }
+
+    static function create()
+    {
+    }
+
+    static function ending()
+    {
+    }
 }

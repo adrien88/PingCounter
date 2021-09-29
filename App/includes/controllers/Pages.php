@@ -6,6 +6,13 @@ class Pages
 {
     static function default()
     {
-        var_dump('home');
+        header('Content-Type: application/json');
+        echo json_encode([
+            '.test' => [
+                'tagname' => 'div',
+                'id' => 'sub'
+            ],
+        ], JSON_PRETTY_PRINT);
+        exit;
     }
 }
