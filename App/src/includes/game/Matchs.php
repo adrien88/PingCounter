@@ -4,32 +4,21 @@ namespace App\game;
 
 use Exception;
 
-class Matches
+/**
+ * Describe a matche.
+ */
+class Matchs
 {
     private int $setsPerMatches = 3;
     private array $playedSets = [];
-    private array $players = [];
+    private playersList $players;
 
     /**
      * 
      */
-    function __construct(array $players)
+    function __construct(playersList $players)
     {
-        foreach ($players as $player)
-            if (2 >= count($this->players))
-                $this->players[] = $player;
-            else
-                throw new Exception('On ne peut jouer qu\'a deux.');
-    }
-
-    /**
-     * 
-     */
-    function getPlayer(string $name): ?string
-    {
-        foreach ($this->players as $player)
-            if ($name === $player->name)
-                return $player;
+        $this->players = $players;
     }
 
     /**
@@ -47,12 +36,14 @@ class Matches
     /**
      * Create a new set if match are not done.
      */
-    function newSet(): ?Sets
+    function newSet(): ?Set
     {
         if (!$this->isClosed()) {
             $scoring = $this->make('Scoring', [$this->players, 11, 2]);
-            if (null !== $scoring)
-                $this->playedSets[] = $this->make('Sets', [$scoring, $this->players]);
+            if (null !== $scoring) {
+                $set = $this->make('Set', [$this->players, $scoring]);
+                $this->playedSets[] = $set;
+            }
             return end($this->playedSets);
         }
     }
