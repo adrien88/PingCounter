@@ -34,8 +34,8 @@ class Player
     /**
      * 
      */
-    function play(): bool
+    function randPlay(): bool
     {
-        return (1 == rand(0, 1)) ? true : false;
+        return (1 === rand(0, 1));
     }
 }

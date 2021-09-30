@@ -2,13 +2,18 @@
 
 namespace App\game;
 
+use Iterator;
 use LogicException;
 
 /**
- * Describe a single player. 
+ * Describe a player list. 
  */
-class PlayersList
+class PlayersList implements Iterator
 {
+    /**
+     * @param array $users
+     * @param int $maxl
+     */
     function __construct(
         private array $users = [],
         private int $maxlenght = -1,
@@ -16,7 +21,7 @@ class PlayersList
     }
 
     /**
-     * 
+     * Add a player.
      */
     function add(Player $player)
     {
@@ -30,7 +35,7 @@ class PlayersList
     }
 
     /**
-     * 
+     * Get a player (if exists)
      */
     function get(string $name): ?Player
     {
@@ -39,11 +44,45 @@ class PlayersList
     }
 
     /**
-     * 
+     * Call function on each player.
      */
     function map($callable)
     {
         foreach ($this->users as $player)
             $callable($player);
+    }
+
+    /**
+     * ---------
+     *      ITERATOR FUNCTION
+     * ---------
+     */
+
+    public function rewind()
+    {
+        $this->position = 0;
+    }
+
+    public function current()
+    {
+        if (isset(array_keys($this->users)[$this->position])) {
+            $key = array_keys($this->users)[$this->position];
+            return $this->users[$key];
+        }
+    }
+
+    public function key()
+    {
+        return $this->position;
+    }
+
+    public function next()
+    {
+        ++$this->position;
+    }
+
+    public function valid()
+    {
+        return isset(array_keys($this->users)[$this->position]);
     }
 }

@@ -12,7 +12,7 @@ class Scoring
      *      > like : [ "foo", "bar", "joe",.. ]
      */
     function __construct(
-        private array $players,
+        private playersList $players,
         private int $goal = 11,
         private int $diff = 2,
     ) {
@@ -33,9 +33,9 @@ class Scoring
     /**
      * Test if 
      */
-    function isEnding(): bool
+    function isClosed(): bool
     {
-        if (11 <= max($this->scoring)) {
+        if (empty($this->scoring) or !empty($this->scoring) &&  11 <= max($this->scoring)) {
             sort($this->scoring);
             if (2 > ($this->scoring[0] - $this->scoring[1])) {
                 return false;
@@ -44,6 +44,9 @@ class Scoring
         return true;
     }
 
+    /**
+     * 
+     */
     function __toString()
     {
         sort($this->scoring);
