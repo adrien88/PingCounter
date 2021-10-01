@@ -29,7 +29,6 @@ class Scoring
     {
         if (isset($this->scoring[$player]))
             $this->scoring[$player]++;
-        asort($this->scoring);
     }
 
     /**
@@ -37,10 +36,12 @@ class Scoring
      */
     function isClosed(): bool
     {
+        arsort($this->scoring);
+        [$first, $second] = array_keys($this->scoring);
         $keys = array_keys($this->scoring);
         if (
-            $this->goal <= $this->scoring[$keys[0]]
-            && $this->diff < abs($this->scoring[$keys[0]] - $this->scoring[$keys[1]])
+            $this->goal <= $this->scoring[$first]
+            && $this->diff < abs($this->scoring[$first] - $this->scoring[$second])
         ) {
             return true;
         }
@@ -52,7 +53,6 @@ class Scoring
      */
     function __toString()
     {
-        asort($this->scoring);
         $str = '<ul>';
         foreach ($this->scoring as $player => $count)
             $str .= "<li>$player => $count</li>";
