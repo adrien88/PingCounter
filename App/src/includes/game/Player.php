@@ -27,15 +27,7 @@ class Player
      */
     function __get(string $propertie)
     {
-        if ('name' === $propertie)
+        if ('name' == $propertie)
             return $this->name;
-    }
-
-    /**
-     * 
-     */
-    function randPlay(): bool
-    {
-        return (1 === rand(0, 1));
     }
 }

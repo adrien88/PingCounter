@@ -2,9 +2,11 @@
 
 namespace App\game;
 
-
 class Scoring
 {
+    /**
+     * @param array $scoring
+     */
     private array $scoring = [];
 
     /**
@@ -12,44 +14,45 @@ class Scoring
      *      > like : [ "foo", "bar", "joe",.. ]
      */
     function __construct(
-        private playersList $players,
+        array $players,
         private int $goal = 11,
-        private int $diff = 2,
+        private int $diff = 1,
     ) {
         foreach ($players as $player)
-            $this->scoring[$player->name] = 0;
+            $this->scoring[$player] = 0;
     }
 
     /**
-     * Increment player
+     * Increment player.
      */
     function increment(string $player)
     {
-        if (isset($this->scoring[$player])) {
+        if (isset($this->scoring[$player]))
             $this->scoring[$player]++;
-        }
+        asort($this->scoring);
     }
 
     /**
-     * Test if 
+     * Try to close
      */
     function isClosed(): bool
     {
-        if (empty($this->scoring) or !empty($this->scoring) &&  11 <= max($this->scoring)) {
-            sort($this->scoring);
-            if (2 > ($this->scoring[0] - $this->scoring[1])) {
-                return false;
-            }
+        $keys = array_keys($this->scoring);
+        if (
+            $this->goal <= $this->scoring[$keys[0]]
+            && $this->diff < abs($this->scoring[$keys[0]] - $this->scoring[$keys[1]])
+        ) {
+            return true;
         }
-        return true;
+        return false;
     }
 
     /**
-     * 
+     * toString()
      */
     function __toString()
     {
-        sort($this->scoring);
+        asort($this->scoring);
         $str = '<ul>';
         foreach ($this->scoring as $player => $count)
             $str .= "<li>$player => $count</li>";
