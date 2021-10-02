@@ -68,7 +68,8 @@ switch ($page) {
 /**
  * save statement match
  */
-$_SESSION['matches'][] = [$match, $score, $players];
+if (isset($match) && isset($score) && isset($players))
+    $_SESSION['matches'][] = [$match, $score, $players];
 
 
 // $page = 'playing';
