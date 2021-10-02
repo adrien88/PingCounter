@@ -53,6 +53,7 @@ switch ($page) {
                     $score->increment($_GET['player']);
                 } else {
                     $match->playset($score);
+                    $score = new Scoring($players, 11, 2);
                 }
             } else {
                 $page = 'scores';
@@ -61,8 +62,6 @@ switch ($page) {
         break;
 
     case 'scores':
-
-
         break;
 }
 
@@ -133,7 +132,11 @@ $_SESSION['matches'][] = [$match, $score, $players];
                 <a href="?page=new">New match.</a>
             </div>
             <div class="right">
-                <?= (string) $score ?>
+                <?php
+                foreach ($match->getSets() as $set) {
+                    echo (string) $set;
+                }
+                ?>
             </div>
         <?php endif ?>
 
