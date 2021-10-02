@@ -12,12 +12,18 @@ class Matchs
     private int $setsPerMatches = 3;
     private array $playedSets = [];
 
+    /**
+     * 
+     */
     function __construct(
         int $sets = 3
     ) {
         $this->setsPerMatches = $sets;
     }
 
+    /**
+     * 
+     */
     function getSets()
     {
         return $this->playedSets;

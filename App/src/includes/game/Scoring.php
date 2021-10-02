@@ -23,6 +23,18 @@ class Scoring
     }
 
     /**
+     * 
+     */
+    function getScore(?string $player = null)
+    {
+        if (isset($player) && isset($this->scoring[$player]))
+            return $this->scoring[$player];
+        else
+            return $this->scoring;
+    }
+
+
+    /**
      * Increment player.
      */
     function increment(string $player)
@@ -41,7 +53,7 @@ class Scoring
         $keys = array_keys($this->scoring);
         if (
             $this->goal <= $this->scoring[$first]
-            && $this->diff < abs($this->scoring[$first] - $this->scoring[$second])
+            && $this->diff <= abs($this->scoring[$first] - $this->scoring[$second])
         ) {
             return true;
         }
@@ -53,25 +65,9 @@ class Scoring
      */
     function __toString()
     {
-        $str = '<ul>';
+        $str = 'SET : <ul>';
         foreach ($this->scoring as $player => $count)
             $str .= "<li>$player => $count</li>";
         return $str . '</ul>';
-    }
-
-    /**
-     * 
-     */
-    function getScore()
-    {
-        return $this->scoring;
-    }
-
-    /**
-     * 
-     */
-    function getLeader()
-    {
-        return array_shift(array_keys($this->scoring[0]));
     }
 }
