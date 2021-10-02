@@ -1,0 +1,25 @@
+html{
+    background-color: lightgray;
+}
+
+.table {
+    display:flex;
+    flex-direction: row;
+    justify-content: center;
+    color:white;
+    /* box-shadow: black 0 0 4px 2px; */
+}
+
+.table a {
+    color:white;
+}
+
+.left, .right{
+    border:3px white solid;
+    background-color: darkolivegreen;
+    padding:2em;
+}
+
+ul li {
+    list-style: none;
+}
