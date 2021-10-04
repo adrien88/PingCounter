@@ -20,6 +20,10 @@ html{
     padding:2em;
 }
 
+input {
+    display: block;
+}
+
 ul li {
     list-style: none;
 }
