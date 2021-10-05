@@ -9,3 +9,9 @@ Each will set endind with score :
     11 points minimum for one player.
     2 point minimum of difference between players.
 
+## Diagramme de classes
+![Diagramme de classe](out/Models/classes/Diagrammedeclasse.png "Diagramme de classe")
+
+
+## Diagramme de sequences du main
+![Diagramme de sequence](out/Models/sequence/Diagrammedesequence.png "Diagramme de sequence")
