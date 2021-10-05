@@ -1,0 +1,27 @@
+@startuml Diagramme de classe
+    
+    title Diagramme de classe
+
+    legend
+        Only two classes. 
+        No relationship. 
+    endlegend
+
+    class Matchs{
+        int setsPerMatches
+        array playedSets
+        __construct()
+        array getSets()
+        void playSet()
+        bool isClosed()
+    }
+
+    class Scoring{
+        array scoring
+        mixed getScore()
+        void increment()
+        bool isClosed()
+    }
+
+@enduml
+

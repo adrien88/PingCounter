@@ -1,0 +1,18 @@
+@startuml Diagramme de sequence
+    skinparam style strictuml
+    actor player
+    player -> main : open game
+    main <- SESSION : load match \n(if exists)
+    main <[#darkblue]-  Page : page "new"
+    main -> Match : new instance of 
+    main -> Scoring : new instance of
+    player -> Match : POST players ids
+    main <[#darkblue]- Page : page "playing"
+    player -> Scoring : GET add to score
+    Match -[#purple]> Match : play sets\n while sets < 3
+    main <[#darkblue]- Page : page "scores"
+    main <- Scoring : get score
+    player <- main : print score
+    main -> SESSION : store match
+    main -[#purple]> main : restart
+@enduml
