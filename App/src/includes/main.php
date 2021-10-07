@@ -2,41 +2,63 @@
 
 use App\game\Matchs;
 use App\game\Scoring;
+use App\game\Set;
 
 /**
  * Affichage 
  */
 session_start();
+// unset($_SESSION['matches']);
+
+
 
 /**
  * load match
  */
-if (isset($_SESSION['matches']) and !empty($_SESSION['matches'])) {
-    [$match, $score, $players] = end($_SESSION['matches']);
+if (isset($_SESSION['matches']) and !empty($_SESSION['matches']))
+    [$match, $players] = array_pop($_SESSION['matches']);
+
+if (isset($match)) {
+    $set = $match->getCurrentSet();
 }
 
-$page = (isset($_GET['page'])) ? $_GET['page'] : 'new';
+if (!isset($_GET['page'])) {
+    header('location:?page=newMatch');
+    exit;
+} else {
+    $page = $_GET['page'];
+}
+
 switch ($page) {
-    case 'new':
-        if (isset($_POST['player1']) && isset($_POST['player1'])) {
-            $match = new Matchs(3);
+
+    case 'newMatch':
+        if (isset($_POST['player1']) && isset($_POST['player2'])) {
+            $match = new Matchs();
             $players = [$_POST['player1'], $_POST['player2']];
-            $score = new Scoring($players, 11, 2);
-            $page = 'playing';
+            redirect('newSet');
+        }
+        break;
+
+    case 'newSet':
+        if (!$match->isClosed()) {
+            if ('new' === $_GET['set']) {
+                $score = new Scoring($players, 11, 2);
+                $set = new Set($score);
+                $match->addSet($set);
+            }
+        } else {
+            redirect('scores');
         }
         break;
 
     case 'playing':
+        $set = $match->getCurrentSet();
+        $score = $set->getScore();
         if (isset($_GET['player'])) {
-            if (!$match->isClosed()) {
-                if (!$score->isClosed()) {
-                    $score->increment($_GET['player']);
-                } else {
-                    $match->playset($score);
-                    $score = new Scoring($players, 11, 2);
-                }
+            if (!$set->isClosed()) {
+                $score->increment($_GET['player']);
             } else {
-                $page = 'scores';
+                redirect('newSet');
             }
         }
         break;
@@ -48,8 +70,25 @@ switch ($page) {
 /**
  * save statement match
  */
-if (isset($match) && isset($score) && isset($players))
-    $_SESSION['matches'][] = [$match, $score, $players];
+$_SESSION['matches'][] = [$match, $players];
 
 
-// $page = 'playing';
+/**
+ * 
+ */
+function redirect(string $page)
+{
+    header('location:?page=' . $page);
+    exit;
+}
+
+/**
+ * Rendering function.
+ */
+function getPage()
+{
+    if (file_exists('App/src/includes/views/' . $_GET['page'] . '.php'))
+        return include 'App/src/includes/views/' . $_GET['page'] . '.php';
+    else
+        return "page not found";
+}
