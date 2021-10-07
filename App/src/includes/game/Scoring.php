@@ -65,7 +65,7 @@ class Scoring
      */
     function __toString()
     {
-        $str = 'SET : <ul>';
+        $str = '<ul>';
         foreach ($this->scoring as $player => $count)
             $str .= "<li>$player => $count</li>";
         return $str . '</ul>';

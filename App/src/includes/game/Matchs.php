@@ -13,7 +13,7 @@ class Matchs
     private array $playedSets = [];
 
     /**
-     * 
+     * New match
      */
     function __construct(
         int $sets = 3
@@ -22,7 +22,7 @@ class Matchs
     }
 
     /**
-     * 
+     * Get all sets
      */
     function getSets()
     {
@@ -30,12 +30,30 @@ class Matchs
     }
 
     /**
-     * Do action
+     * get a new set
      */
-    function playSet(Scoring $score)
+    function addSet(Set &$set)
     {
         if (!$this->isClosed())
-            $this->playedSets[] = $score;
+            $this->playedSets[] = $set;
+    }
+
+    /**
+     * get the current set
+     */
+    function getCurrentSet(): null|Set
+    {
+        if (!empty($this->playedSets))
+            return end($this->playedSets);
+        return null;
+    }
+
+    /**
+     * get the current key set
+     */
+    function getKeyCurrentSet(): int
+    {
+        return (count($this->playedSets) + 1);
     }
 
     /**
@@ -43,6 +61,6 @@ class Matchs
      */
     function isClosed(): bool
     {
-        return (count($this->playedSets) >= $this->setsPerMatches);
+        return (count($this->playedSets) >= $this->setsPerMatches && $this->getCurrentSet()->isClosed());
     }
 }
