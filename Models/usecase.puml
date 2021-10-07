@@ -1,0 +1,21 @@
+@startuml
+Title uses case
+left to right direction
+
+actor Arbitre as user
+
+package action {
+    "Enregistrer les joueurs" as (addPlayer)
+    "Démarrer un match" as (newMatch)
+    "Démarrer un set" as (newSet)
+    "Ajouter des points" as (addToScore)
+    "Lire le score" as (getScore)
+}
+
+user --> addPlayer
+user --> newMatch
+user --> newSet
+user --> addToScore
+user --> getScore
+
+@enduml
