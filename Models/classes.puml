@@ -2,26 +2,126 @@
     
     title Diagramme de classe
 
+    skinparam BackgroundColor #000 
+    skinparam TitleFontColor #fff 
+    skinparam PackageBackgroundColor #222 
+    skinparam PackageBorderColor gray 
+    skinparam PackageFontColor white
+    skinparam ArrowColor #dda
+    skinparam ArrowFontColor #eee 
+    skinparam ClassBackgroundColor #333
+    skinparam ClassFontColor #fff
+    skinparam ClassBorderColor #aaf
+    skinparam ClassFontColor #eee
+    skinparam ClassAttributeFontColor white
+    
+    skinparam MinClassWidth 200
+
+    ' skinparam linetype ortho 
+    ' skinparam linetype polyline 
+    
+
+    package "Tennis de table" {
+
+        class "Matche" as Matche {
+            ..
+            + array equipes
+            + array rencontres
+            --
+            + Team addTeam()
+            + Meet newMeet()
+            + string printScores()
+        }
+
+        package "Joueurs" {
+
+            class "Équipe" as Team {
+                ..
+                + string name
+                + string CapitainName
+                + array players
+                --
+                + addPlayer()
+                + getPlayer()
+            }
+ 
+            class "Joueur" as Player {
+                ..
+                + string name
+                + int classement
+                --
+                + setClassement()
+            }
+        }
+
+        package "Rencontres" {
+            class "Score" as Score {
+                 ..
+                + array score
+                --
+                + addIdPlayerGroup()
+                + increment()
+            }
+
+            abstract class "Rencontre" as Meet {
+                - int setPerMeet  
+                ..
+                + array Scores  
+                + array meetGroup
+                --
+                + createSet()
+            }
+
+            class "Rencontre Double" as DoubleMeet {
+                ..
+                --
+            }
+
+            class "Rencontre Simple" as SimpleMeet {
+                ..
+                --
+            }
+
+            class "Set" as Set {
+                - scorePerSet
+                ..
+                + array services
+                + array Scores 
+                --
+                + playaset()
+            }
+
+            class "Groupe de Rencontre" as MeetGroup {
+                ..
+                + int maxPlayers
+                + array players
+                --
+            }
+        }
+    }
+         
+    Matche "*" o--> "1" SimpleMeet 
+    Matche "*" o--> "1" DoubleMeet
+    Matche "1.." o--> "1" Team
+
+    Set "1" *--> "1" Score
+     
+    SimpleMeet "3" o--> "1" Set
+    DoubleMeet "3" o--> "1" Set 
+
+    Meet <|-- SimpleMeet
+    Meet <|-- DoubleMeet
+
+    SimpleMeet "2" *--> "1" MeetGroup 
+    DoubleMeet "2" *--> "1" MeetGroup 
+        
+    MeetGroup "1|2" o--> "1" Player 
+    Team "3" *--> "1" Player 
+
     legend
-        Only two classes. 
-        No relationship. 
+        second attributes group is public & opened in read-only.
     endlegend
 
-    class Matchs{
-        int setsPerMatches
-        array playedSets
-        __construct()
-        array getSets()
-        void playSet()
-        bool isClosed()
-    }
-
-    class Scoring{
-        array scoring
-        mixed getScore()
-        void increment()
-        bool isClosed()
-    }
 
 @enduml
 
